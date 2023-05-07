@@ -1,3 +1,5 @@
+const { pianoEvents } = require('./midi')
+
 export default function createVirtualKeyboard(container) {
   const numberOfKeys = 88;
   const firstMidiNote = 21;
@@ -17,4 +19,22 @@ export default function createVirtualKeyboard(container) {
     key.dataset.note = firstMidiNote + i;
     container.appendChild(key);
   }
+
+  // css 
+  pianoEvents.on('keyPress', (note, velocity) => {
+    // get key by note
+    const midiNote = note.toMidiNote();
+    const key = document.querySelector(`.key[data-note="${midiNote}"]`);
+    key.classList.add("pressed");
+
+  });
+
+  // css
+  pianoEvents.on('keyRelease', (note) => {
+    // get key by note
+    const midiNote = note.toMidiNote();
+    const key = document.querySelector(`.key[data-note="${midiNote}"]`);
+    key.classList.remove("pressed");
+  });
+  
 }

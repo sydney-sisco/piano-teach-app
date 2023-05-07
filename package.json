@@ -6,6 +6,7 @@
     "build": "parcel build"
   },
   "devDependencies": {
+    "events": "^3.3.0",
     "parcel": "latest"
   },
   "dependencies": {

@@ -1,4 +1,7 @@
 import * as Tone from 'tone';
+const { EventEmitter } = require('events');
+const pianoEvents = new EventEmitter();
+import Note from './Note';
 
 const pianoSampler = new Tone.Sampler({
   urls: {
@@ -62,10 +65,11 @@ function onMIDIMessage(event) {
   const key = document.querySelector(`.key[data-note="${midiNote}"]`);
 
   if (key) {
+    const targetNote = Note.fromMidiKey(midiNote);
     if (command === 144 && velocity > 0) { // Note on
-      key.classList.add("pressed");
+      pianoEvents.emit('keyPress', targetNote, velocity);
     } else if (command === 128 || (command === 144 && velocity === 0)) { // Note off
-      key.classList.remove("pressed");
+      pianoEvents.emit('keyRelease', targetNote);
     }
   }
 }
@@ -88,3 +92,5 @@ export default function initMidi() {
     console.error("MIDI not supported in this browser.");
   }
 }
+
+module.exports.pianoEvents = pianoEvents;

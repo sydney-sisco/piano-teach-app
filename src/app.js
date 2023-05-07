@@ -4,3 +4,6 @@ createVirtualKeyboard(keyboardContainer);
 
 import initMidi from './modules/midi.js';
 initMidi();
+
+import initLogging from './modules/logging.js';
+initLogging();
