@@ -9,4 +9,17 @@ import initLogging from './modules/logging.js';
 initLogging();
 
 const { pianoEvents } = require('./modules/midi')
-const training = require('./modules/training');
+
+import Training from './modules/training.js';
+
+let training;
+
+document.getElementById('startTraining').addEventListener('click', () => {
+  training = new Training();
+});
+
+document.getElementById('stopTraining').addEventListener('click', () => {
+  if (training) {
+    training.stop();
+  }
+});

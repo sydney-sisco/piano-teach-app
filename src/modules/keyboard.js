@@ -36,5 +36,12 @@ export default function createVirtualKeyboard(container) {
     const key = document.querySelector(`.key[data-note="${midiNote}"]`);
     key.classList.remove("pressed");
   });
-  
+
+  // pianoEvents.on('keyCorrect', (note, index) => {
+  //   console.log(`Correct note played: ${note.name}${note.octave}, Index: ${index}`);
+  // });
+
+  // pianoEvents.on('keyMiss', (note, index) => {
+  //   console.log(`Incorrect note played: ${note.name}${note.octave}, Index: ${index}`);
+  // });
 }

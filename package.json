@@ -7,6 +7,7 @@
   },
   "devDependencies": {
     "events": "^3.3.0",
+    "os-browserify": "^0.3.0",
     "parcel": "latest"
   },
   "dependencies": {
