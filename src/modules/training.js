@@ -1,21 +1,44 @@
-const cMajorScale = [60, 62, 64, 65, 67, 69, 71]; // C4, D4, E4, F4, G4, A4, B4
+const EventEmitter = require('events');
+const { pianoEvents } = require('./midi')
+const Note = require('./Note'); // Assuming you have already exported the Note class
 
+class Training extends EventEmitter {
+  constructor() {
+    super();
+    this.targetIndex = 0;
+    this.cMajorScale = [
+      new Note('C', 4),
+      new Note('D', 4),
+      new Note('E', 4),
+      new Note('F', 4),
+      new Note('G', 4),
+      new Note('A', 4),
+      new Note('B', 4),
+      new Note('C', 5),
+    ];
+  }
 
-let currentNoteIndex = 0;
+  checkNoteProgression(playedNote) {
+    const targetNote = this.cMajorScale[this.targetIndex];
+    if (playedNote.name === targetNote.name && playedNote.octave === targetNote.octave) {
+      this.targetIndex += 1;
+      if (this.targetIndex >= this.cMajorScale.length) {
+        this.emit('cMajorScaleComplete');
+        this.targetIndex = 0;
+      }
+    } else {
+      this.targetIndex = 0;
+    }
+  }
+}
 
-pianoEvents.emit('highlightNote', cMajorScale[currentNoteIndex]);
+const training = new Training();
+module.exports = training;
 
 pianoEvents.on('keyPress', (note, velocity) => {
-  if (note === cMajorScale[currentNoteIndex]) {
-    console.log('You pressed the correct key!');
+  training.checkNoteProgression(note);
+});
 
-    // Increment the current note index, and reset to 0 if the end is reached.
-    currentNoteIndex = (currentNoteIndex + 1) % cMajorScale.length;
-
-    // Highlight the next note for the user
-    pianoEvents.emit('highlightNote', cMajorScale[currentNoteIndex]);
-
-  } else {
-    console.log('Incorrect key pressed. Try again!');
-  }
+training.on('cMajorScaleComplete', () => {
+  console.log('Congratulations! You completed the C major scale.');
 });

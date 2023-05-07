@@ -7,3 +7,6 @@ initMidi();
 
 import initLogging from './modules/logging.js';
 initLogging();
+
+const { pianoEvents } = require('./modules/midi')
+const training = require('./modules/training');
