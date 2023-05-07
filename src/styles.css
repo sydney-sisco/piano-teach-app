@@ -1,0 +1,29 @@
+#keyboard {
+  display: flex;
+  flex-wrap: nowrap;
+  position: relative;
+}
+
+.key {
+  height: 100px;
+  width: 30px;
+  border: 1px solid #ccc;
+  z-index: 1;
+}
+
+.key-white {
+  background-color: #fff;
+}
+
+.key-black {
+  height: 60px;
+  width: 20px;
+  margin-left: -10px;
+  margin-right: -10px;
+  background-color: #000;
+  z-index: 2;
+}
+
+.key.pressed {
+  background-color: #6db5ff;
+}
