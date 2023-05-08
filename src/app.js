@@ -2,18 +2,17 @@ import createVirtualKeyboard from './modules/keyboard.js';
 const keyboardContainer = document.getElementById("keyboard");
 createVirtualKeyboard(keyboardContainer);
 
+
 import initMidi from './modules/midi.js';
 initMidi();
+
 
 import initLogging from './modules/logging.js';
 initLogging();
 
-const { pianoEvents } = require('./modules/midi')
 
 import Training from './modules/training.js';
-
 let training;
-
 document.getElementById('startTraining').addEventListener('click', () => {
   training = new Training(getCurrentScaleValue());
 });
@@ -29,8 +28,7 @@ import initSounds from './modules/sounds.js';
 // initSounds();
 
 
-import scales from './modules/patterns.json';
-const scalesJson = scales;
+import scalesJson from './modules/patterns.json';
 
 function createScaleDropdown() {
   const dropdown = document.createElement('select');
@@ -46,12 +44,15 @@ function createScaleDropdown() {
   return dropdown;
 }
 
-// Create the dropdown selector in the DOM
+const dropdownContainer = document.getElementById('trainingContainer');
 const scaleDropdown = createScaleDropdown();
-document.body.appendChild(scaleDropdown);
+dropdownContainer.prepend(scaleDropdown);
 
 // Function to get current value of the dropdown
 function getCurrentScaleValue() {
   return scaleDropdown.value;
-}
+} ;
 
+
+import initTrainingProgram from './modules/training_program.js';
+initTrainingProgram(document.getElementById('trainingProgramContainer'));

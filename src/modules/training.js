@@ -6,12 +6,14 @@ function jsonPatternToNotes(scale) {
   return scale.map(({ name, octave }) => new Note(name, octave));
 }
 
-export default class Training{
-  constructor(pattern) {
+export default class Training {
+  constructor(pattern, cb) {
     console.log('Training started:', pattern);
     this.targetIndex = 0;
     this.patternName = pattern;
 
+    // Callback to be called when training is complete
+    this.cb = cb;
 
     this.notePattern = jsonPatternToNotes(patterns[pattern]);
 
@@ -36,9 +38,13 @@ export default class Training{
       pianoEvents.emit('keyCorrect', playedNote, this.targetIndex);
       this.targetIndex += 1;
       if (this.targetIndex >= this.notePattern.length) {
-        console.log('Congratulations! You completed the C major scale.');
+        console.log(`Congratulations! You completed ${this.patternName}.`);
         playSuccessAudio();
         this.targetIndex = 0;
+
+        if (typeof this.cb === 'function') {
+          this.cb();
+        }
       }
     } else {
       pianoEvents.emit('keyMiss', playedNote, this.targetIndex);

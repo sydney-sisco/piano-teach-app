@@ -1,0 +1,16 @@
+{
+  "circle_of_fifths": [
+    "c_major",
+    "g_major",
+    "d_major",
+    "a_major",
+    "e_major",
+    "b_major",
+    "f_sharp_major",
+    "c_sharp_major",
+    "a_flat_major",
+    "e_flat_major",
+    "b_flat_major",
+    "f_major"
+  ]
+}
