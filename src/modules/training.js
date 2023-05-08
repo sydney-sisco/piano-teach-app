@@ -8,6 +8,7 @@ function jsonScaleToNotes(scale) {
 
 export default class Training{
   constructor(pattern) {
+    console.log('Training started:', pattern);
     this.targetIndex = 0;
 
 
@@ -26,6 +27,13 @@ export default class Training{
   }
 
   checkNoteProgression(playedNote) {
+
+    // emit expected note if first note
+    // if (this.targetIndex === 0) {
+    //   pianoEvents.emit('expectedNote', this.cMajorScale[this.targetIndex]);
+    // }
+    pianoEvents.emit('expectedNote', this.cMajorScale[this.targetIndex]);
+
     const targetNote = this.cMajorScale[this.targetIndex];
     if (playedNote.name === targetNote.name && playedNote.octave === targetNote.octave) {
       pianoEvents.emit('keyCorrect', playedNote, this.targetIndex);

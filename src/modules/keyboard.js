@@ -12,12 +12,10 @@ export default function createVirtualKeyboard(container) {
     const note = fromMidiKey(midiNote);
     pianoEvents.emit('keyPress', note, 127);
 
-    // Release the key after 100ms
+    // Release the key after a delay
     setTimeout(() => {
       pianoEvents.emit('keyRelease', note);
-    }
-      , 250);
-
+    }, 250);
   }
 
   for (let i = 0; i < numberOfKeys; i++) {
@@ -33,7 +31,6 @@ export default function createVirtualKeyboard(container) {
     key.dataset.note = firstMidiNote + i;
     container.appendChild(key);
 
-    // Add click event listener
     key.addEventListener('click', onKeyClick);
   }
 
@@ -58,7 +55,30 @@ export default function createVirtualKeyboard(container) {
   //   console.log(`Correct note played: ${note.name}${note.octave}, Index: ${index}`);
   // });
 
-  // pianoEvents.on('keyMiss', (note, index) => {
-  //   console.log(`Incorrect note played: ${note.name}${note.octave}, Index: ${index}`);
-  // });
+  pianoEvents.on('keyMiss', (note, index) => {
+    console.log(`Incorrect note played: ${note.name}${note.octave}, Index: ${index}`);
+    // get key by note
+    const midiNote = note.toMidiNote();
+    const key = document.querySelector(`.key[data-note="${midiNote}"]`);
+    key.classList.add("missed");
+
+    // Release the key after a delay
+    setTimeout(() => {
+      key.classList.remove("missed");
+    }, 250);
+  });
+
+  pianoEvents.on('expectedNote', (note, index) => {
+    console.log(`Expected note: ${note.name}${note.octave}, Index: ${index}`);
+    // get key by note
+    const midiNote = note.toMidiNote();
+    const key = document.querySelector(`.key[data-note="${midiNote}"]`);
+    key.classList.add("expected");
+    
+    // Release the key after a delay
+    setTimeout(() => {
+      key.classList.remove("expected");
+    }
+    , 250);
+  });
 }

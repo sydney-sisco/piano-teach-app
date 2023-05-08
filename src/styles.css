@@ -27,3 +27,11 @@
 .key.pressed {
   background-color: #6db5ff;
 }
+
+.key.missed {
+  background-color: #ff6d6d;
+}
+
+.key.expected {
+  background-color: #6dff6d;
+}

@@ -52,7 +52,6 @@ export default function initSounds() {
 
   pianoEvents.on('keyRelease', (note) => {
     // Logic for handling key release
-    console.log(`Note released: ${note}`);
   });
 
 }

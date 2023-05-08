@@ -15,8 +15,6 @@ import Training from './modules/training.js';
 let training;
 
 document.getElementById('startTraining').addEventListener('click', () => {
-  // Example: Get current value from the dropdown
-  console.log("Current scale value:", getCurrentScaleValue());
   training = new Training(getCurrentScaleValue());
 });
 
@@ -47,8 +45,6 @@ function createScaleDropdown() {
 
   return dropdown;
 }
-
-// document.body.appendChild(createScaleDropdown());
 
 // Create the dropdown selector in the DOM
 const scaleDropdown = createScaleDropdown();
