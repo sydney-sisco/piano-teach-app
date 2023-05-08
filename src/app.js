@@ -15,7 +15,9 @@ import Training from './modules/training.js';
 let training;
 
 document.getElementById('startTraining').addEventListener('click', () => {
-  training = new Training();
+  // Example: Get current value from the dropdown
+  console.log("Current scale value:", getCurrentScaleValue());
+  training = new Training(getCurrentScaleValue());
 });
 
 document.getElementById('stopTraining').addEventListener('click', () => {
@@ -23,3 +25,37 @@ document.getElementById('stopTraining').addEventListener('click', () => {
     training.stop();
   }
 });
+
+
+import initSounds from './modules/sounds.js';
+initSounds();
+
+
+import scales from './modules/patterns.json';
+const scalesJson = scales;
+
+function createScaleDropdown() {
+  const dropdown = document.createElement('select');
+  dropdown.id = 'scaleDropdown';
+
+  Object.keys(scalesJson).forEach(scale => {
+    const option = document.createElement('option');
+    option.value = scale;
+    option.textContent = scale.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+    dropdown.appendChild(option);
+  });
+
+  return dropdown;
+}
+
+// document.body.appendChild(createScaleDropdown());
+
+// Create the dropdown selector in the DOM
+const scaleDropdown = createScaleDropdown();
+document.body.appendChild(scaleDropdown);
+
+// Function to get current value of the dropdown
+function getCurrentScaleValue() {
+  return scaleDropdown.value;
+}
+

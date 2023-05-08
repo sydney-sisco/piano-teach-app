@@ -1,19 +1,17 @@
 const { pianoEvents } = require('./midi')
 const Note = require('./Note');
+import scales from './patterns.json';
+
+function jsonScaleToNotes(scale) {
+  return scale.map(({ name, octave }) => new Note(name, octave));
+}
 
 export default class Training{
-  constructor() {
+  constructor(pattern) {
     this.targetIndex = 0;
-    this.cMajorScale = [
-      new Note('C', 4),
-      new Note('D', 4),
-      new Note('E', 4),
-      new Note('F', 4),
-      new Note('G', 4),
-      new Note('A', 4),
-      new Note('B', 4),
-      new Note('C', 5),
-    ];
+
+
+    this.cMajorScale = jsonScaleToNotes(scales[pattern]);
 
     this.checkNoteProgressionBound = (note, velocity) => {
       this.checkNoteProgression(note);

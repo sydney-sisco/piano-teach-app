@@ -1,4 +1,5 @@
 const { pianoEvents } = require('./midi')
+import { fromMidiKey } from './Note.js'; // Add import for the Note class
 
 export default function createVirtualKeyboard(container) {
   const numberOfKeys = 88;
@@ -6,18 +7,34 @@ export default function createVirtualKeyboard(container) {
 
   const blackKeys = [1, 3, 6, 8, 10];
 
+  function onKeyClick(event) {
+    const midiNote = parseInt(event.currentTarget.dataset.note, 10);
+    const note = fromMidiKey(midiNote);
+    pianoEvents.emit('keyPress', note, 127);
+
+    // Release the key after 100ms
+    setTimeout(() => {
+      pianoEvents.emit('keyRelease', note);
+    }
+      , 250);
+
+  }
+
   for (let i = 0; i < numberOfKeys; i++) {
-    const key = document.createElement("div");
+    const key = document.createElement('div');
 
     const keyPosition = (firstMidiNote + i) % 12;
     if (blackKeys.includes(keyPosition)) {
-      key.className = "key key-black";
+      key.className = 'key key-black';
     } else {
-      key.className = "key key-white";
+      key.className = 'key key-white';
     }
 
     key.dataset.note = firstMidiNote + i;
     container.appendChild(key);
+
+    // Add click event listener
+    key.addEventListener('click', onKeyClick);
   }
 
   // css 
