@@ -7,17 +7,7 @@ export default function createVirtualKeyboard(container) {
 
   const blackKeys = [1, 3, 6, 8, 10];
 
-  function onKeyClick(event) {
-    const midiNote = parseInt(event.currentTarget.dataset.note, 10);
-    const note = fromMidiKey(midiNote);
-    pianoEvents.emit('keyPress', note, 127);
-
-    // Release the key after a delay
-    setTimeout(() => {
-      pianoEvents.emit('keyRelease', note);
-    }, 250);
-  }
-
+  // Create the virtual keys
   for (let i = 0; i < numberOfKeys; i++) {
     const key = document.createElement('div');
 
@@ -32,6 +22,17 @@ export default function createVirtualKeyboard(container) {
     container.appendChild(key);
 
     key.addEventListener('click', onKeyClick);
+  }
+
+  function onKeyClick(event) {
+    const midiNote = parseInt(event.currentTarget.dataset.note, 10);
+    const note = fromMidiKey(midiNote);
+    pianoEvents.emit('keyPress', note, 127);
+
+    // Release the key after a delay
+    setTimeout(() => {
+      pianoEvents.emit('keyRelease', note);
+    }, 250);
   }
 
   // css 
@@ -55,8 +56,8 @@ export default function createVirtualKeyboard(container) {
   //   console.log(`Correct note played: ${note.name}${note.octave}, Index: ${index}`);
   // });
 
-  pianoEvents.on('keyMiss', (note, index) => {
-    console.log(`Incorrect note played: ${note.name}${note.octave}, Index: ${index}`);
+  pianoEvents.on('keyMiss', (note) => {
+    console.log(`Incorrect note played: ${note.name}${note.octave}`);
     // get key by note
     const midiNote = note.toMidiNote();
     const key = document.querySelector(`.key[data-note="${midiNote}"]`);
@@ -68,8 +69,8 @@ export default function createVirtualKeyboard(container) {
     }, 250);
   });
 
-  pianoEvents.on('expectedNote', (note, index) => {
-    console.log(`Expected note: ${note.name}${note.octave}, Index: ${index}`);
+  pianoEvents.on('expectedNote', (note) => {
+    console.log(`Expected note: ${note.name}${note.octave}`);
     // get key by note
     const midiNote = note.toMidiNote();
     const key = document.querySelector(`.key[data-note="${midiNote}"]`);

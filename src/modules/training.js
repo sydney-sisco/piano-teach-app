@@ -10,6 +10,7 @@ export default class Training{
   constructor(pattern) {
     console.log('Training started:', pattern);
     this.targetIndex = 0;
+    this.pattern = pattern;
 
 
     this.cMajorScale = jsonScaleToNotes(scales[pattern]);
@@ -22,6 +23,7 @@ export default class Training{
   }
 
   stop() {
+    console.log('Training stopped:', this.pattern);
     // Detach the keyPress event listener
     pianoEvents.off('keyPress', this.checkNoteProgressionBound);
   }
@@ -35,7 +37,7 @@ export default class Training{
     pianoEvents.emit('expectedNote', this.cMajorScale[this.targetIndex]);
 
     const targetNote = this.cMajorScale[this.targetIndex];
-    if (playedNote.name === targetNote.name && playedNote.octave === targetNote.octave) {
+    if (playedNote.isEqual(targetNote)) {
       pianoEvents.emit('keyCorrect', playedNote, this.targetIndex);
       this.targetIndex += 1;
       if (this.targetIndex >= this.cMajorScale.length) {
