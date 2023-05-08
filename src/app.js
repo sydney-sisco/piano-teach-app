@@ -26,7 +26,7 @@ document.getElementById('stopTraining').addEventListener('click', () => {
 
 
 import initSounds from './modules/sounds.js';
-initSounds();
+// initSounds();
 
 
 import scales from './modules/patterns.json';
