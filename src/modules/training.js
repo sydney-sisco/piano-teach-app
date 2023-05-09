@@ -1,57 +1,103 @@
 const { pianoEvents } = require('./midi')
 const Note = require('./Note');
-import patterns from './patterns.json';
+import scales from './scales.json';
 
 function jsonPatternToNotes(scale) {
   return scale.map(({ name, octave }) => new Note(name, octave));
 }
 
-export default class Training {
-  constructor(pattern, cb) {
+export default function initTraining(container) {
+  console.log('Training module loaded');
+
+  let patternName;
+  let notePattern;
+  let targetIndex;
+
+  const startTraining = (pattern) => {
+    if (patternName) {
+      console.log('Training already in progress:', patternName);
+      return;
+    }
+
     console.log('Training started:', pattern);
-    this.targetIndex = 0;
-    this.patternName = pattern;
+    patternName = pattern;
+    notePattern = jsonPatternToNotes(scales[pattern]);
+    targetIndex = 0;
 
-    // Callback to be called when training is complete
-    this.cb = cb;
+    pianoEvents.on('keyPress', checkNoteProgression);
+  };
 
-    this.notePattern = jsonPatternToNotes(patterns[pattern]);
+  const stopTraining = () => {
+    if (!patternName) {
+      console.log('No training in progress');
+      return;
+    }
+    console.log('Training stopped:', patternName);
+    patternName = null;
+    notePattern = null;
+    targetIndex = 0;
 
-    this.checkNoteProgressionBound = (note, velocity) => {
-      this.checkNoteProgression(note);
-    };
+    pianoEvents.off('keyPress', checkNoteProgression);
+  };
 
-    pianoEvents.on('keyPress', this.checkNoteProgressionBound);
-  }
+  const checkNoteProgression = (playedNote) => {
+    pianoEvents.emit('expectedNote', notePattern[targetIndex]);
 
-  stop() {
-    console.log('Training stopped:', this.patternName);
-    // Detach the keyPress event listener
-    pianoEvents.off('keyPress', this.checkNoteProgressionBound);
-  }
-
-  checkNoteProgression(playedNote) {
-    pianoEvents.emit('expectedNote', this.notePattern[this.targetIndex]);
-
-    const targetNote = this.notePattern[this.targetIndex];
+    const targetNote = notePattern[targetIndex];
     if (playedNote.isEqual(targetNote)) {
-      pianoEvents.emit('keyCorrect', playedNote, this.targetIndex);
-      this.targetIndex += 1;
-      if (this.targetIndex >= this.notePattern.length) {
-        console.log(`Congratulations! You completed ${this.patternName}.`);
+      pianoEvents.emit('keyCorrect', playedNote, targetIndex);
+      targetIndex += 1;
+      if (targetIndex >= notePattern.length) {
+        console.log(`Congratulations! You completed ${patternName}.`);
         playSuccessAudio();
-        this.targetIndex = 0;
-
-        if (typeof this.cb === 'function') {
-          this.cb();
-        }
+        targetIndex = 0;
       }
     } else {
-      pianoEvents.emit('keyMiss', playedNote, this.targetIndex);
-      this.targetIndex = 0;
+      pianoEvents.emit('keyMiss', playedNote, targetIndex);
+      targetIndex = 0;
       playIncorrectNote();
     }
   }
+
+  dropdown = createScaleDropdown(container);
+  createButtons(container, dropdown, startTraining, stopTraining);
+
+  return {
+    startTraining,
+    stopTraining,
+  }
+}
+
+function createScaleDropdown(container) {
+  const dropdown = document.createElement('select');
+  dropdown.id = 'scaleDropdown';
+
+  Object.keys(scales).forEach(scale => {
+    const option = document.createElement('option');
+    option.value = scale;
+    option.textContent = scale.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+    dropdown.appendChild(option);
+  });
+
+  container.appendChild(dropdown);
+  return dropdown;
+}
+
+function createButtons(container, dropdown, startTraining, stopTraining) {
+  const startButton = document.createElement('button');
+  startButton.id = 'startTraining';
+  startButton.textContent = 'Start Training';
+
+  startButton.addEventListener('click', () => startTraining(dropdown.value));
+
+  const stopButton = document.createElement('button');
+  stopButton.id = 'stopTraining';
+  stopButton.textContent = 'End Training';
+
+  stopButton.addEventListener('click', stopTraining);
+
+  container.appendChild(startButton);
+  container.appendChild(stopButton);
 }
 
 function playIncorrectNote() {

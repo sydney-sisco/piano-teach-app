@@ -28,24 +28,24 @@ function createButtons(container) {
 
   startButton.addEventListener('click', () => {
     console.log('Start Training Program button clicked');
-    console.log('Practice:', practiceDropdown.value);
+    console.log('Practice:', practiceJson[practiceDropdown.value]);
 
-    console.log(practiceJson[practiceDropdown.value]);
+    trainingLoop(practiceJson[practiceDropdown.value]);
 
-    let scale = 0;
-    let reps = 0;
-    let training = new Training(practiceJson[practiceDropdown.value][scale], () => {
-      console.log('Training complete');
-      reps += 1;
-      if (reps >= 5) {
-        training.stop();
-        scale += 1;
-        training = new Training(practiceJson[practiceDropdown.value][scale], () => {
-          console.log('Training complete');
-          reps = 0;
-        });
-      }
-    });
+    // let scale = 0;
+    // let reps = 0;
+    // let training = new Training(practiceJson[practiceDropdown.value][scale], () => {
+    //   console.log('Training complete');
+    //   reps += 1;
+    //   if (reps >= 5) {
+    //     training.stop();
+    //     scale += 1;
+    //     training = new Training(practiceJson[practiceDropdown.value][scale], () => {
+    //       console.log('Training complete');
+    //       reps = 0;
+    //     });
+    //   }
+    // });
   });
   
 
@@ -62,4 +62,16 @@ function createButtons(container) {
 
   container.appendChild(startButton);
   container.appendChild(stopButton);
+}
+
+const trainingLoop = (training) => {
+  console.log('Training:', training);
+
+  training.forEach((scale, index) => {
+    let reps = 0;
+    // let training = new Training(scale, () => {
+  });
+
+  console.log('Training complete');
+  // training.stop();
 }
