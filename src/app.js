@@ -7,18 +7,17 @@ import initMidi from './modules/midi.js';
 initMidi();
 
 
+import initSounds from './modules/sounds.js';
+// initSounds();
+
+
 import initLogging from './modules/logging.js';
 initLogging();
 
 
 import initTraining from './modules/training.js';
-const {startTraining, stopTraining} = initTraining(document.getElementById('trainingContainer'));
-
-
-import initSounds from './modules/sounds.js';
-// initSounds();
-
-
-
 import initTrainingProgram from './modules/training_program.js';
-initTrainingProgram(document.getElementById('trainingProgramContainer'));
+
+const { xxx, stopTraining} = initTraining(document.getElementById('trainingContainer'));
+console.log('startTrainingFunction:', xxx);
+initTrainingProgram(document.getElementById('trainingProgramContainer'), xxx, stopTraining);

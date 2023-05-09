@@ -13,7 +13,7 @@ export default function initTraining(container) {
   let notePattern;
   let targetIndex;
 
-  const startTraining = (pattern) => {
+  const xxx = async (pattern) => {
     if (patternName) {
       console.log('Training already in progress:', patternName);
       return;
@@ -25,6 +25,12 @@ export default function initTraining(container) {
     targetIndex = 0;
 
     pianoEvents.on('keyPress', checkNoteProgression);
+
+    return new Promise(resolve => {
+      pianoEvents.once('trainingCompleted', () => {
+        resolve();
+      });
+    });
   };
 
   const stopTraining = () => {
@@ -50,6 +56,7 @@ export default function initTraining(container) {
       if (targetIndex >= notePattern.length) {
         console.log(`Congratulations! You completed ${patternName}.`);
         playSuccessAudio();
+        pianoEvents.emit('trainingCompleted');
         targetIndex = 0;
       }
     } else {
@@ -60,10 +67,10 @@ export default function initTraining(container) {
   }
 
   dropdown = createScaleDropdown(container);
-  createButtons(container, dropdown, startTraining, stopTraining);
+  createButtons(container, dropdown, xxx, stopTraining);
 
   return {
-    startTraining,
+    xxx,
     stopTraining,
   }
 }
@@ -83,12 +90,12 @@ function createScaleDropdown(container) {
   return dropdown;
 }
 
-function createButtons(container, dropdown, startTraining, stopTraining) {
+function createButtons(container, dropdown, xxx, stopTraining) {
   const startButton = document.createElement('button');
-  startButton.id = 'startTraining';
+  // startButton.id = 'startTraining';
   startButton.textContent = 'Start Training';
 
-  startButton.addEventListener('click', () => startTraining(dropdown.value));
+  startButton.addEventListener('click', () => xxx(dropdown.value));
 
   const stopButton = document.createElement('button');
   stopButton.id = 'stopTraining';

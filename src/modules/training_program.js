@@ -1,10 +1,9 @@
-import Training from './training.js';
 import practiceJson from './practice.json';
 
-export default function initTrainingProgram(container) {
+export default function initTrainingProgram(container, xxx, stopTraining) {
   console.log('Training Program module loaded');
-  createPracticeDropdown(container);
-  createButtons(container);
+  const dropdown = createPracticeDropdown(container);
+  createButtons(container, dropdown, xxx, stopTraining);
 }
 
 function createPracticeDropdown(container) {
@@ -19,18 +18,19 @@ function createPracticeDropdown(container) {
   });
 
   container.appendChild(dropdown);
+  return dropdown;
 }
 
-function createButtons(container) {
+function createButtons(container, dropdown, xxx, stopTraining) {
   const startButton = document.createElement('button');
   startButton.id = 'startTrainingProgram';
   startButton.textContent = 'Start Training Program';
 
   startButton.addEventListener('click', () => {
     console.log('Start Training Program button clicked');
-    console.log('Practice:', practiceJson[practiceDropdown.value]);
+    console.log('Practice:', dropdown.value);
 
-    trainingLoop(practiceJson[practiceDropdown.value]);
+    trainingLoop(practiceJson[dropdown.value], xxx, stopTraining);
 
     // let scale = 0;
     // let reps = 0;
@@ -64,14 +64,31 @@ function createButtons(container) {
   container.appendChild(stopButton);
 }
 
-const trainingLoop = (training) => {
+const trainingLoop = async (training, xxx, stopTraining) => {
   console.log('Training:', training);
 
-  training.forEach((scale, index) => {
+  // iterate through each scale in the training program
+  for (let i = 0; i < training.length; i++) {
+    const maxReps = 5;
     let reps = 0;
-    // let training = new Training(scale, () => {
-  });
 
-  console.log('Training complete');
-  // training.stop();
+    
+    while (reps < maxReps) {
+      setTrainingIndicator(`${training[i]}: ${reps}/${maxReps}`);
+        
+      console.log('Scale:', training[i]);
+      await xxx(training[i]);
+      console.log('Training complete');
+      stopTraining();
+      reps += 1;
+    }
+
+  }
+
+  console.log('Training program complete');
+}
+
+const setTrainingIndicator = (training) => {
+  const trainingIndicator = document.getElementById('trainingIndicator');
+  trainingIndicator.textContent = `Training: ${training}`;
 }
