@@ -31,21 +31,6 @@ function createButtons(container, dropdown, xxx, stopTraining) {
     console.log('Practice:', dropdown.value);
 
     trainingLoop(practiceJson[dropdown.value], xxx, stopTraining);
-
-    // let scale = 0;
-    // let reps = 0;
-    // let training = new Training(practiceJson[practiceDropdown.value][scale], () => {
-    //   console.log('Training complete');
-    //   reps += 1;
-    //   if (reps >= 5) {
-    //     training.stop();
-    //     scale += 1;
-    //     training = new Training(practiceJson[practiceDropdown.value][scale], () => {
-    //       console.log('Training complete');
-    //       reps = 0;
-    //     });
-    //   }
-    // });
   });
   
 
@@ -69,7 +54,7 @@ const trainingLoop = async (training, xxx, stopTraining) => {
 
   // iterate through each scale in the training program
   for (let i = 0; i < training.length; i++) {
-    const maxReps = 5;
+    const maxReps = 1;
     let reps = 0;
 
     

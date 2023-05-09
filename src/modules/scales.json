@@ -1,4 +1,7 @@
 {
+  "test": [
+    { "name": "E#", "octave": 5 }
+  ],
   "c_major": [
     { "name": "C", "octave": 4 },
     { "name": "D", "octave": 4 },
@@ -58,7 +61,14 @@
     { "name": "Bb", "octave": 4 },
     { "name": "C", "octave": 5 },
     { "name": "D", "octave": 5 },
-    { "name": "Eb", "octave": 5 }
+    { "name": "Eb", "octave": 5 },
+    { "name": "D", "octave": 5 },
+    { "name": "C", "octave": 5 },
+    { "name": "Bb", "octave": 4 },
+    { "name": "Ab", "octave": 4 },
+    { "name": "G", "octave": 4 },
+    { "name": "F", "octave": 4 },
+    { "name": "Eb", "octave": 4 }
   ],
   "e_major": [
     { "name": "E", "octave": 4 },
@@ -102,7 +112,14 @@
     { "name": "C#", "octave": 5 },
     { "name": "D#", "octave": 5 },
     { "name": "E#", "octave": 5 },
-    { "name": "F#", "octave": 5 }
+    { "name": "F#", "octave": 5 },
+    { "name": "E#", "octave": 5 },
+    { "name": "D#", "octave": 5 },
+    { "name": "C#", "octave": 5 },
+    { "name": "B", "octave": 4 },
+    { "name": "A#", "octave": 4 },
+    { "name": "G#", "octave": 4 },
+    { "name": "F#", "octave": 4 }
   ],
   "g_major": [
     { "name": "G", "octave": 4 },
@@ -163,7 +180,14 @@
     { "name": "F", "octave": 5 },
     { "name": "G", "octave": 5 },
     { "name": "A", "octave": 5 },
-    { "name": "Bb", "octave": 5 }
+    { "name": "Bb", "octave": 5 },
+    { "name": "A", "octave": 5 },
+    { "name": "G", "octave": 5 },
+    { "name": "F", "octave": 5 },
+    { "name": "Eb", "octave": 5 },
+    { "name": "D", "octave": 5 },
+    { "name": "C", "octave": 5 },
+    { "name": "Bb", "octave": 4 }
   ],
   "b_major": [
     { "name": "B", "octave": 4 },
