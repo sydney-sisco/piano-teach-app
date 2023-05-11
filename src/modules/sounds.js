@@ -42,16 +42,25 @@ function playMidiNote(midiNote, velocity) {
   pianoSampler.triggerAttackRelease(note, "16n", Tone.context.currentTime, velocity / 127);
 }
 
+let soundEnabled = true;
+
 export default function initSounds() {
   console.log('Sounds module loaded');
 
   pianoEvents.on('keyPress', (note, velocity) => {
-    // Logic for handling key press
-    playMidiNote(note.toMidiNote(), velocity);
+    if (soundEnabled) {
+      playMidiNote(note.toMidiNote(), velocity);
+    }
   });
 
   pianoEvents.on('keyRelease', (note) => {
     // Logic for handling key release
   });
-
 }
+
+const toggleSoundButton = document.getElementById('toggleSoundButton');
+toggleSoundButton.addEventListener('click', () => {
+  soundEnabled = !soundEnabled;
+  const buttonText = soundEnabled ? 'Disable Sound' : 'Enable Sound';
+  toggleSoundButton.textContent = buttonText;
+});

@@ -8,7 +8,7 @@ initMidi();
 
 
 import initSounds from './modules/sounds.js';
-// initSounds();
+initSounds();
 
 
 import initLogging from './modules/logging.js';
