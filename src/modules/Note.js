@@ -46,6 +46,14 @@ class Note {
     return this.toMidiNote() === otherNote.toMidiNote();
   }
 
+  isEqualOctave(otherNote) {
+    return this.octave === otherNote.octave;
+  }
+
+  isEqualName(otherNote) {
+    return Note.getSharpEquivalent(this.name) === Note.getSharpEquivalent(otherNote.name);
+  }
+
   // to string
   toString() {
     return `${this.name}${this.octave}`;

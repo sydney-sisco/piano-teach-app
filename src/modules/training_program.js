@@ -54,7 +54,7 @@ const trainingLoop = async (training, xxx, stopTraining) => {
 
   // iterate through each scale in the training program
   for (let i = 0; i < training.length; i++) {
-    const maxReps = 1;
+    const maxReps = 3;
     let reps = 0;
 
     
@@ -68,9 +68,13 @@ const trainingLoop = async (training, xxx, stopTraining) => {
       reps += 1;
     }
 
+    // TODO: play a woosh sound here
+
   }
 
   console.log('Training program complete');
+  // TODO: play a good sound here
+  // TODO: display a message to the user that the training program is complete
 }
 
 const setTrainingIndicator = (training) => {

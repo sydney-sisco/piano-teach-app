@@ -39,7 +39,12 @@ const pianoSampler = new Tone.Sampler({
 
 function playMidiNote(midiNote, velocity) {
   const note = Tone.Frequency(midiNote, "midi").toNote();
-  pianoSampler.triggerAttackRelease(note, "16n", Tone.context.currentTime, velocity / 127);
+  pianoSampler.triggerAttack(note, Tone.context.currentTime, velocity / 127);
+}
+
+function stopMidiNote(midiNote) {
+  const note = Tone.Frequency(midiNote, "midi").toNote();
+  pianoSampler.triggerRelease(note, Tone.context.currentTime);
 }
 
 let soundEnabled = true;
@@ -54,7 +59,9 @@ export default function initSounds() {
   });
 
   pianoEvents.on('keyRelease', (note) => {
-    // Logic for handling key release
+    if (soundEnabled) {
+      stopMidiNote(note.toMidiNote());
+    }
   });
 }
 
