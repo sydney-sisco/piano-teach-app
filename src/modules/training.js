@@ -24,6 +24,8 @@ export default function initTraining(container) {
     notePattern = jsonPatternToNotes(scales[pattern]);
     targetIndex = 0;
 
+    pianoEvents.emit('displaySingleNote', notePattern[targetIndex])
+
     pianoEvents.on('keyPress', checkNoteProgression);
 
     return new Promise(resolve => {
@@ -58,10 +60,14 @@ export default function initTraining(container) {
         playSuccessAudio();
         pianoEvents.emit('trainingCompleted');
         targetIndex = 0;
+        pianoEvents.emit('displaySingleNote', notePattern[targetIndex]);
+      } else {
+        pianoEvents.emit('displaySingleNote', notePattern[targetIndex]);
       }
     } else {
       pianoEvents.emit('keyMiss', playedNote, targetIndex);
       targetIndex = 0;
+      pianoEvents.emit('displaySingleNote', notePattern[targetIndex]);
       playIncorrectNote();
     }
   }
