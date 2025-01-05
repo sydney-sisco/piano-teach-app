@@ -288,8 +288,14 @@
     { "name": "A", "octave": 4 },
     { "name": "F", "octave": 4 },
     { "name": "E", "octave": 4 },
-    { "name": "D", "octave": 4 }
-  ],
+    { "name": "D", "octave": 4 },
+    { "name": "A#", "octave": 4 },
+    { "name": "A#", "octave": 4 },
+    { "name": "A", "octave": 4 },
+    { "name": "F", "octave": 4 },
+    { "name": "G", "octave": 4 },
+    { "name": "F", "octave": 4 }
+],
   "yankee_doodle": [
     { "name": "D", "octave": 4 },
     { "name": "E", "octave": 4 },
