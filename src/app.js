@@ -21,3 +21,10 @@ import initTrainingProgram from './modules/training_program.js';
 const { xxx, stopTraining} = initTraining(document.getElementById('trainingContainer'));
 console.log('startTrainingFunction:', xxx);
 initTrainingProgram(document.getElementById('trainingProgramContainer'), xxx, stopTraining);
+
+import initNotation from './modules/sheetMusic.js';
+initNotation("notation");
+
+import initFlashCards from './modules/flashCards.js';
+const flashCardContainer = document.getElementById('flashCardContainer')
+initFlashCards(flashCardContainer);
