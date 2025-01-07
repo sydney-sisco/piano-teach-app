@@ -85,6 +85,7 @@ export default function initNotation(containerId) {
 
   };
   window.displaySingleNote = displaySingleNote;
+  // runnable in the browser console:
   // displaySingleNote('C/4', 'treble');
 
   const displayEmptyStaves = () => {
@@ -120,4 +121,5 @@ export default function initNotation(containerId) {
   displayEmptyStaves();
 
   pianoEvents.on('displaySingleNote', displaySingleNote);
+  pianoEvents.on('displayEmptyStaves', displayEmptyStaves);
 }

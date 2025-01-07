@@ -54,7 +54,10 @@ class Note {
     return Note.getSharpEquivalent(this.name) === Note.getSharpEquivalent(otherNote.name);
   }
 
-  // to string
+  toVexFlowNote() {
+    return `${this.name}/${this.octave}`;
+  }
+
   toString() {
     return `${this.name}${this.octave}`;
   }
