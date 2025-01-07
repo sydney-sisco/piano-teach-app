@@ -49,6 +49,8 @@ const referenceNotes = [
 ];
 let notesForCurrentQuiz;
 let currentNote;
+let streak = 0;
+const streakGoal = 20;
 
 export default function initFlashCards(container) {
   console.log('Flash Cards module loaded');
@@ -68,6 +70,7 @@ const createElements = (container) => {
   referenceNotesButton.addEventListener('click', () => {
     notesForCurrentQuiz = referenceNotes;
     newRandomNote(notesForCurrentQuiz);
+    setTrainingIndicator(`Streak: ${streak}/${streakGoal}`)
     // Remove the listener if it already exists
     pianoEvents.off('keyPress', checkNote);
     pianoEvents.on('keyPress', checkNote);
@@ -80,6 +83,7 @@ const createElements = (container) => {
   allNotesButton.addEventListener('click', () => {
     notesForCurrentQuiz = generateNotes();
     newRandomNote(notesForCurrentQuiz);
+    setTrainingIndicator(`Streak: ${streak}/${streakGoal}`)
     // Remove the listener if it already exists
     pianoEvents.off('keyPress', checkNote);
     pianoEvents.on('keyPress', checkNote);
@@ -93,6 +97,8 @@ const createElements = (container) => {
     pianoEvents.off('keyPress', checkNote)
     notesForCurrentQuiz = null;
     currentNote = null;
+    streak = 0;
+    setTrainingIndicator('')
     pianoEvents.emit('displayEmptyStaves');
   });
   container.appendChild(stopButton);
@@ -103,10 +109,27 @@ const checkNote = note => {
 
   if (note.isEqual(currentNote)) {
     console.log('correct!');
+    streak++;
+    setTrainingIndicator(`Streak: ${streak}/${streakGoal}`)
     playSuccessAudio();
-    newRandomNote(notesForCurrentQuiz);
+
+    if (streak === streakGoal) {
+      // TODO: play a good sound here
+      console.log('quiz complete!');
+      pianoEvents.off('keyPress', checkNote)
+      notesForCurrentQuiz = null;
+      currentNote = null;
+      streak = 0;
+      setTrainingIndicator('Success!')
+      pianoEvents.emit('displayEmptyStaves');
+    } else {
+      newRandomNote(notesForCurrentQuiz);
+    }
+
   } else {
     console.log('wrong!');
+    streak = 0;
+    setTrainingIndicator(`Streak: ${streak}/${streakGoal}`)
     playIncorrectNote();
   }
 };
@@ -125,6 +148,12 @@ function playSuccessAudio() {
   });
 }
 
+const setTrainingIndicator = (text) => {
+  const trainingIndicator = document.getElementById('trainingIndicator');
+  trainingIndicator.textContent = text;
+}
+
+// function to generate all notes between C2 and C6
 function generateNotes() {
   // Helper function to generate note objects
   function createNoteObjects(startOctave, endOctave, stave) {
