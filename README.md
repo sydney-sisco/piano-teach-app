@@ -8,6 +8,24 @@ Current training programs include:
 - [Circle of Fifths](https://en.wikipedia.org/wiki/Circle_of_fifths)
 - More to come!
 
+## Sheet Music
+
+
+vexflow:
+https://github.com/0xfe/vexflow
+https://jsfiddle.net/ronyeh/xure9svb/
+
+
+Unused:
+https://cruncher.ch/blog/printing-music-with-css-grid/
+
+https://github.com/stephband/scribe
+
+https://github.com/soundio/sequence-json
+
+
+
+
 ## Development
 
 It uses Parcel.
