@@ -174,8 +174,9 @@ function generateNotes() {
 
   const bassNotes = createNoteObjects(2, 3, 'bass');         // From C2 to B3
   const middleC = [{ note: new Note('C', 4), stave: 'bass' }]; // C4 in bass
-  const trebleNotes = createNoteObjects(4, 6, 'treble');     // From C4 to B6
+  const trebleNotes = createNoteObjects(4, 5, 'treble');     // From C4 to B5
+  const upperC = [{ note: new Note('C', 6), stave: 'treble'}];
 
   // Concatenate all notes into a single array
-  return [...bassNotes, ...middleC, ...trebleNotes];
+  return [...bassNotes, ...middleC, ...trebleNotes, ...upperC];
 }
