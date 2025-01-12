@@ -3,7 +3,7 @@
   "source": "src/index.html",
   "scripts": {
     "start": "parcel serve",
-    "build": "parcel build"
+    "build": "parcel build --dist-dir docs --public-url ./"
   },
   "devDependencies": {
     "events": "^3.3.0",
