@@ -1,6 +1,3 @@
-import * as Vex from 'vexflow';
-const { pianoEvents } = require('./midi')
-
 const { Factory, Renderer, Stave } = Vex.Flow;
 
 const VF = Vex.Flow;
@@ -8,7 +5,7 @@ const VF = Vex.Flow;
 const staveWidth = 200;
 
 
-export default function initNotation(containerId) {
+const initNotation = containerId => {
   console.log('Notation module loaded');
   
   const displayNotes = notes => {
@@ -122,4 +119,4 @@ export default function initNotation(containerId) {
 
   pianoEvents.on('displaySingleNote', displaySingleNote);
   pianoEvents.on('displayEmptyStaves', displayEmptyStaves);
-}
+};

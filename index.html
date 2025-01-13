@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Virtual MIDI Keyboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <!-- <script type="module" src="app.js"></script> -->
+  <script src="https://unpkg.com/tone"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vexflow@4.2.2/build/cjs/vexflow.js"></script>
+</head>
+
+<body>
+  <h1>Virtual MIDI Keyboard</h1>
+  
+  <!-- sheet music goes here -->
+  <div id="notation"></div>
+
+  <div id="keyboard">
+    <!-- <div class="key" data-note="48"></div> -->
+  </div>
+  
+  <audio id="incorrectNoteAudio">
+    <source src="./media/miss.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  <audio id="successAudio">
+    <source src="./media/success.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <div id="trainingContainer"></div>
+  <div id="trainingProgramContainer"></div>
+  <div id="flashCardContainer"></div>
+
+  <div id="trainingIndicator"></div>
+
+  <button id="toggleSoundButton">Toggle Sound</button>
+
+  <script src="./modules/events.js"></script>
+  <script src="./modules/Note.js"></script>
+  <script src="./modules/keyboard.js"></script>
+  <script src="./modules/midi.js"></script>
+  <script src="./modules/sounds.js"></script>
+  <script src="./modules/logging.js"></script>
+  <script src="./modules/training.js"></script>
+  <script src="./modules/training_program.js"></script>
+  <script src="./modules/sheetMusic.js"></script>
+  <script src="./modules/flashCards.js"></script>
+  
+  <!-- Main app script -->
+  <script>
+      const keyboardContainer = document.getElementById("keyboard");
+      createVirtualKeyboard(keyboardContainer);
+
+      initMidi();
+      initSounds();
+      initLogging();
+
+      const { xxx, stopTraining } = initTraining(document.getElementById('trainingContainer'));
+      console.log('startTrainingFunction:', xxx);
+
+      initTrainingProgram(document.getElementById('trainingProgramContainer'), xxx, stopTraining);
+      
+      initNotation("notation");
+
+      const flashCardContainer = document.getElementById('flashCardContainer');
+      initFlashCards(flashCardContainer);
+  </script>
+</body>
+
+</html>

@@ -1,7 +1,3 @@
-const { EventEmitter } = require('events');
-const pianoEvents = new EventEmitter();
-import Note from './Note';
-
 function onMIDIMessage(event) {
   console.log("MIDI message received:", event.data);
 
@@ -31,12 +27,10 @@ function onMIDIError(error) {
   console.error("Error accessing MIDI devices:", error);
 }
 
-export default function initMidi() {
+const initMidi = () => {
   if (navigator.requestMIDIAccess) {
     navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIError);
   } else {
     console.error("MIDI not supported in this browser.");
   }
-}
-
-module.exports.pianoEvents = pianoEvents;
+};

@@ -1,6 +1,4 @@
-const { pianoEvents } = require('./midi')
-
-export default function initLogging() {
+const initLogging = () => {
   console.log('Logging module loaded');
 
   pianoEvents.on('keyPress', (note, velocity) => {
@@ -13,4 +11,4 @@ export default function initLogging() {
     console.log(`Note released: ${note}`);
   });
 
-}
+};

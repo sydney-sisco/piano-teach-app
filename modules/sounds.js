@@ -1,6 +1,3 @@
-import * as Tone from 'tone';
-const { pianoEvents } = require('./midi')
-
 const pianoSampler = new Tone.Sampler({
   urls: {
     A0: "A0.mp3",
@@ -49,7 +46,7 @@ function stopMidiNote(midiNote) {
 
 let soundEnabled = true;
 
-export default function initSounds() {
+const initSounds = () => {
   console.log('Sounds module loaded');
 
   pianoEvents.on('keyPress', (note, velocity) => {
@@ -63,7 +60,7 @@ export default function initSounds() {
       stopMidiNote(note.toMidiNote());
     }
   });
-}
+};
 
 const toggleSoundButton = document.getElementById('toggleSoundButton');
 toggleSoundButton.addEventListener('click', () => {

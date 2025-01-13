@@ -62,5 +62,3 @@ class Note {
     return `${this.name}${this.octave}`;
   }
 }
-
-module.exports = Note;

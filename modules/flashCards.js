@@ -1,6 +1,3 @@
-const { pianoEvents } = require('./midi')
-const Note = require('./Note');
-
 // reference notes
 const referenceNotes = [
   // right hand 
@@ -52,16 +49,16 @@ let currentNote;
 let streak = 0;
 const streakGoal = 20;
 
-export default function initFlashCards(container) {
+const initFlashCards = container => {
   console.log('Flash Cards module loaded');
   createElements(container);
-}
+};
 
 const newRandomNote = notes => {
   const {note, stave} = notes[Math.floor(Math.random() * notes.length)];
   pianoEvents.emit('displaySingleNote', note.toVexFlowNote(), stave);
   currentNote = note;
-}
+};
 
 const createElements = (container) => {
   // button to start reference notes quiz
@@ -134,19 +131,19 @@ const checkNote = note => {
   }
 };
 
-function playIncorrectNote() {
-  const audio = document.getElementById('incorrectNoteAudio');
-  audio.play().catch((error) => {
-    console.error('Error playing audio:', error);
-  });
-}
+// function playIncorrectNote() {
+//   const audio = document.getElementById('incorrectNoteAudio');
+//   audio.play().catch((error) => {
+//     console.error('Error playing audio:', error);
+//   });
+// }
 
-function playSuccessAudio() {
-  const audio = document.getElementById('successAudio');
-  audio.play().catch((error) => {
-    console.error('Error playing audio:', error);
-  });
-}
+// function playSuccessAudio() {
+//   const audio = document.getElementById('successAudio');
+//   audio.play().catch((error) => {
+//     console.error('Error playing audio:', error);
+//   });
+// }
 
 const setTrainingIndicator = (text) => {
   const trainingIndicator = document.getElementById('trainingIndicator');

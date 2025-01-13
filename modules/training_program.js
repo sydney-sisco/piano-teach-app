@@ -1,10 +1,9 @@
-import practiceJson from './practice.json';
-
-export default function initTrainingProgram(container, xxx, stopTraining) {
+// TODO: xxx ??????
+const initTrainingProgram = (container, xxx, stopTraining) => {
   console.log('Training Program module loaded');
   const dropdown = createPracticeDropdown(container);
   createButtons(container, dropdown, xxx, stopTraining);
-}
+};
 
 function createPracticeDropdown(container) {
   const dropdown = document.createElement('select');
@@ -77,7 +76,25 @@ const trainingLoop = async (training, xxx, stopTraining) => {
   // TODO: display a message to the user that the training program is complete
 }
 
-const setTrainingIndicator = (training) => {
-  const trainingIndicator = document.getElementById('trainingIndicator');
-  trainingIndicator.textContent = `Training: ${training}`;
-}
+// const setTrainingIndicator = (training) => {
+//   const trainingIndicator = document.getElementById('trainingIndicator');
+//   trainingIndicator.textContent = `Training: ${training}`;
+// }
+
+const practiceJson = {
+  "circle_of_fifths": [
+    "c_major",
+    "g_major",
+    "d_major",
+    "a_major",
+    "e_major",
+    "b_major",
+    "f_sharp_major",
+    "c_sharp_major",
+    "a_flat_major",
+    "e_flat_major",
+    "b_flat_major",
+    "f_major",
+    "c_major"
+  ]
+};

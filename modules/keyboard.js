@@ -1,7 +1,4 @@
-const { pianoEvents } = require('./midi')
-import { fromMidiKey } from './Note.js'; // Add import for the Note class
-
-export default function createVirtualKeyboard(container) {
+const createVirtualKeyboard = container => {
   const numberOfKeys = 88;
   const firstMidiNote = 21;
 
@@ -26,7 +23,7 @@ export default function createVirtualKeyboard(container) {
 
   function onKeyClick(event) {
     const midiNote = parseInt(event.currentTarget.dataset.note, 10);
-    const note = fromMidiKey(midiNote);
+    const note = Note.fromMidiKey(midiNote);
     pianoEvents.emit('keyPress', note, 127);
 
     // Release the key after a delay
@@ -82,4 +79,4 @@ export default function createVirtualKeyboard(container) {
     }
     , 250);
   });
-}
+};
